@@ -89,7 +89,7 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 11px;
+  gap: 10px;
 
   width: 260px;
   max-width: 400px;
@@ -107,6 +107,8 @@ export const Form = styled.form`
     width: 98%;
     height: 2.4rem;
     border-radius: 4px;
+    font-family: var(--font-family);
+    color: var(--grey0);
   }
   input::placeholder {
     font-family: var(--font-family);
@@ -153,5 +155,12 @@ export const Form = styled.form`
   button:hover {
     background-color: var(--color-primary-focus);
     transition: 0.4s;
+  }
+
+  .error {
+    font-family: var(--font-family);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--color-primary-focus);
   }
 `;

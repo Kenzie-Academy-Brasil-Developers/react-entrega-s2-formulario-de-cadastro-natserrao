@@ -12,6 +12,7 @@ function RoutesMain() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard/:name" element={<Dashboard />} />
         <Route path="*" element={<Navigate replace to="/login" />} />
       </Routes>
     </AnimatePresence>

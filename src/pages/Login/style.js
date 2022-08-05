@@ -25,7 +25,7 @@ export const Section = styled.section`
 
 export const Container = styled.div`
   width: 300px;
-  height: 60%;
+  height: 70%;
 
   display: flex;
   flex-direction: column;
@@ -98,10 +98,13 @@ export const Form = styled.form`
 
   input {
     background-color: var(--grey2);
-    width: 95.5%;
-    height: 2.4rem;
     border-radius: 4px;
     border: none;
+    font-family: var(--font-family);
+    color: var(--grey0);
+
+    width: 95.5%;
+    height: 2.4rem;
   }
 
   input:focus {
@@ -159,5 +162,12 @@ export const Form = styled.form`
 
   .password:focus-within {
     border: 1.5px solid var(--grey0);
+  }
+
+  .error {
+    font-family: var(--font-family);
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--color-primary-focus);
   }
 `;

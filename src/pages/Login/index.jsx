@@ -1,9 +1,57 @@
 import { AiFillEye } from "react-icons/ai";
 import { Section, Container, Form } from "./style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { formSchema } from "../../validators/loginUser";
+import { useState } from "react";
+import api from "../../services/api";
+import { toast } from "react-toastify";
+
 export const Login = () => {
+  const [isLogged, setIsLogged] = useState(false);
+  const [user, setUser] = useState([]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  const navigate = useNavigate();
+  function onSubmit(data) {
+    api
+      .post("/sessions", data)
+      .then((res) => {
+        const { data } = res;
+        if (data) {
+          setIsLogged(true);
+          setUser([...user, data]);
+
+          toast.success("Login feito com sucesso!");
+
+          localStorage.setItem("@TOKEN", JSON.stringify(data.token));
+          localStorage.setItem("@USERID", JSON.stringify(data.user.id));
+
+          setTimeout(() => {
+            navigate("/dashboard", { replace: true }, { state: user });
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        const { response } = err;
+        console.log(response);
+        if (response.data.status === "error") {
+          toast.error("Ops! Algo deu errado");
+          toast.warning(response.data.message);
+        }
+      });
+  }
+  console.log(user);
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -16,13 +64,24 @@ export const Login = () => {
 
         <Container>
           <h4>Login</h4>
-          <Form>
-            <input type="email" placeholder="Email:" />
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <input type="email" placeholder="Email" {...register("email")} />
+            {errors.email ? (
+              <span className="error">{errors.email.message}</span>
+            ) : null}
 
             <div className="password">
-              <input id="iconInput" type="password" placeholder="Senha:" />
+              <input
+                id="iconInput"
+                type="password"
+                placeholder="Senha"
+                {...register("password")}
+              />
               <AiFillEye id="icon" />
             </div>
+            {errors.password ? (
+              <span className="error">{errors.password.message}</span>
+            ) : null}
 
             <button type="submit">Entrar</button>
           </Form>

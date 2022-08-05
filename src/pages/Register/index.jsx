@@ -1,8 +1,44 @@
 import { Container, Nav, Section, Form } from "./style";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import api from "../../services/api";
+
+import { formSchema } from "../../validators/registerUser";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 export const Register = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(formSchema),
+  });
+
+  const navigate = useNavigate();
+
+  function onSubmit(data) {
+    api
+      .post("/users", data)
+      .then((res) => {
+        console.log(res);
+        if (res.data) {
+          toast.success("Conta criada com sucesso!");
+          setTimeout(() => {
+            navigate("/login", { replace: true });
+          }, 3500);
+        }
+      })
+      .catch((err) => {
+        if (err.response.data.status === "error") {
+          toast.error("Ops! Algo deu errado");
+        }
+      });
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -24,21 +60,66 @@ export const Register = () => {
             <p>Rapido e grátis, vamos nessa!</p>
           </div>
 
-          <Form>
-            <input type="text" placeholder="Nome:" />
-            <input type="email" placeholder="Email:" />
-            <input type="password" placeholder="Senha:" />
-            <input type="password" placeholder="Confirmar senha:" />
-            <input type="text" placeholder="Bio:" />
-            <input type="tel" placeholder="Contato:" />
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <input type="text" placeholder="Nome" {...register("name")} />
+            {errors.name ? (
+              <span className="error">{errors.name.message}</span>
+            ) : null}
 
-            <select name="module" id="module">
-              <option value="primeiro">Primeiro Módulo</option>
-              <option value="segundo">Segundo Módulo</option>
-              <option value="terceiro">Terceiro Módulo</option>
-              <option value="quarto">Quarto Módulo</option>
-              <option value="quinto">Quinto Módulo</option>
+            <input type="email" placeholder="Email" {...register("email")} />
+            {errors.email ? (
+              <span className="error">{errors.email.message}</span>
+            ) : null}
+
+            <input
+              type="password"
+              placeholder="Senha"
+              {...register("password")}
+            />
+            {errors.password ? (
+              <span className="error">{errors.password.message}</span>
+            ) : null}
+
+            <input
+              type="password"
+              placeholder="Confirme a senha"
+              {...register("confirmPassword")}
+            />
+            {errors.confirmPassword ? (
+              <span className="error">{errors.confirmPassword.message}</span>
+            ) : null}
+
+            <input type="text" placeholder="Bio" {...register("bio")} />
+            {errors.bio ? (
+              <span className="error">{errors.bio.message}</span>
+            ) : null}
+
+            <input
+              type="number"
+              placeholder="Contato"
+              {...register("contact")}
+            />
+            {errors.contact ? (
+              <span className="error">{errors.contact.message}</span>
+            ) : null}
+
+            <select name="module" id="module" {...register("course_module")}>
+              <option value="Primeiro Módulo (Introdução ao Frontend)">
+                Primeiro Módulo
+              </option>
+              <option value="Segundo módulo (Frontend Avançado)">
+                Segundo Módulo
+              </option>
+              <option value="Terceiro módulo (Introdução ao Backend)">
+                Terceiro Módulo
+              </option>
+              <option value="Quarto módulo (Backend Avançado)">
+                Quarto Módulo
+              </option>
             </select>
+            {errors.course_module ? (
+              <span className="error">{errors.course_module.message}</span>
+            ) : null}
 
             <button type="submit">Cadastrar</button>
           </Form>

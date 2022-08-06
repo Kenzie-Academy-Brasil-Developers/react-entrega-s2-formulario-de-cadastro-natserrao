@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 export const Login = () => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState([]);
+  const [passwordShow, setPasswordShow] = useState(false);
 
   const {
     register,
@@ -21,6 +22,10 @@ export const Login = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
+
+  function togglePassword() {
+    setPasswordShow(!passwordShow);
+  }
 
   const navigate = useNavigate();
   function onSubmit(data) {
@@ -38,8 +43,8 @@ export const Login = () => {
           localStorage.setItem("@USERID", JSON.stringify(data.user.id));
 
           setTimeout(() => {
-            navigate("/dashboard", { replace: true }, { state: user });
-          }, 3000);
+            navigate(`/dashboard/${data.user.name}`, { replace: true });
+          }, 1500);
         }
       })
       .catch((err) => {
@@ -47,11 +52,10 @@ export const Login = () => {
         console.log(response);
         if (response.data.status === "error") {
           toast.error("Ops! Algo deu errado");
-          toast.warning(response.data.message);
         }
       });
   }
-  console.log(user);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -73,11 +77,11 @@ export const Login = () => {
             <div className="password">
               <input
                 id="iconInput"
-                type="password"
+                type={passwordShow ? "text" : "password"}
                 placeholder="Senha"
                 {...register("password")}
               />
-              <AiFillEye id="icon" />
+              <AiFillEye id="icon" onClick={togglePassword} />
             </div>
             {errors.password ? (
               <span className="error">{errors.password.message}</span>

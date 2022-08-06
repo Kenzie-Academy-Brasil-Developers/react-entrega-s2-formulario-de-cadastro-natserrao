@@ -51,13 +51,13 @@ export const Nav = styled.nav`
 
 export const Container = styled.div`
   width: 300px;
-  height: 85%;
+  height: 80%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.8rem;
+  gap: 1.2rem;
 
   background-color: var(--grey3);
   border-radius: 7px;
@@ -89,10 +89,12 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
+  gap: 12px;
 
   width: 260px;
   max-width: 400px;
+  height: 85%;
+  min-height: 200px;
 
   label {
     font-family: var(--font-family);
@@ -118,6 +120,7 @@ export const Form = styled.form`
     padding: 0 5px;
   }
   input:focus {
+    outline: 0;
     border: 1px solid var(--grey0);
   }
 

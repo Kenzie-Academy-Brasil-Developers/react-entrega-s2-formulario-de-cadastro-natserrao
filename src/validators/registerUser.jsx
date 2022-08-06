@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const formSchema = yup.object({
+export const formSchema = yup.object().shape({
   name: yup.string().required("Seu nome é obrigatório"),
   email: yup
     .string()
@@ -18,5 +18,16 @@ export const formSchema = yup.object({
     .string()
     .oneOf([yup.ref("password")], "Suas senhas devem ser iguais"),
   bio: yup.string().required("Sua bio é obrigatória"),
-  contact: yup.number().required("Contato é obrigatório"),
+  contact: yup
+    .string()
+    .required("Seu contato é obrigatório")
+    .matches(
+      /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+      "Insira um contato válido"
+    ),
+  course_module: yup
+    .string()
+    .ensure()
+    .nullable()
+    .required("Seu módulo é obrigatório"),
 });

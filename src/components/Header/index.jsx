@@ -2,7 +2,7 @@ import { Nav, SectionHeader, StyledHeader } from "./style";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-export const Header = ({ user }) => {
+export const Header = () => {
   function cleanData() {
     localStorage.clear();
   }
@@ -18,7 +18,7 @@ export const Header = ({ user }) => {
 
       <StyledHeader>
         <h2>Olá, {name}</h2>
-        <span>curso bem aqui</span>
+        <span>curso aqui</span>
       </StyledHeader>
     </SectionHeader>
   );

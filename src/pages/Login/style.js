@@ -25,7 +25,7 @@ export const Section = styled.section`
 
 export const Container = styled.div`
   width: 300px;
-  height: 70%;
+  height: 65%;
 
   display: flex;
   flex-direction: column;
@@ -42,7 +42,7 @@ export const Container = styled.div`
     font-family: var(--font-family);
     color: var(--grey0);
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
 
   .infoCadastro {
@@ -87,6 +87,7 @@ export const Form = styled.form`
 
   width: 260px;
   max-width: 400px;
+
   margin: 0 auto;
 
   label {

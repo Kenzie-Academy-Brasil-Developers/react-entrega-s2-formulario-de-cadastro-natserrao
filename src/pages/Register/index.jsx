@@ -61,19 +61,27 @@ export const Register = () => {
           </div>
 
           <Form onSubmit={handleSubmit(onSubmit)}>
-            <input type="text" placeholder="Nome" {...register("name")} />
+            <input
+              type="text"
+              placeholder="Digite aqui seu nome"
+              {...register("name")}
+            />
             {errors.name ? (
               <span className="error">{errors.name.message}</span>
             ) : null}
 
-            <input type="email" placeholder="Email" {...register("email")} />
+            <input
+              type="email"
+              placeholder="Digite aqui seu email"
+              {...register("email")}
+            />
             {errors.email ? (
               <span className="error">{errors.email.message}</span>
             ) : null}
 
             <input
               type="password"
-              placeholder="Senha"
+              placeholder="Digite aqui sua senha"
               {...register("password")}
             />
             {errors.password ? (
@@ -82,21 +90,25 @@ export const Register = () => {
 
             <input
               type="password"
-              placeholder="Confirme a senha"
+              placeholder="Confirme aqui sua senha"
               {...register("confirmPassword")}
             />
             {errors.confirmPassword ? (
               <span className="error">{errors.confirmPassword.message}</span>
             ) : null}
 
-            <input type="text" placeholder="Bio" {...register("bio")} />
+            <input
+              type="text"
+              placeholder="Fale sobre você"
+              {...register("bio")}
+            />
             {errors.bio ? (
               <span className="error">{errors.bio.message}</span>
             ) : null}
 
             <input
-              type="number"
-              placeholder="Contato"
+              type="tel"
+              placeholder=" +99 (99) 99999-9999"
               {...register("contact")}
             />
             {errors.contact ? (

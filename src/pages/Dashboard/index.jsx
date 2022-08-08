@@ -2,7 +2,7 @@ import { Header } from "../../components/Header";
 import { Main, Section } from "./style";
 import { motion } from "framer-motion";
 
-export const Dashboard = ({ user }) => {
+export const Dashboard = () => {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -10,7 +10,7 @@ export const Dashboard = ({ user }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 1 }}
     >
-      <Header user={user} />
+      <Header />
       <Section>
         <Main className="main">
           <p>Que pena! Estamos em desenvolvimento.</p>

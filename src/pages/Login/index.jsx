@@ -33,6 +33,7 @@ export const Login = () => {
       .post("/sessions", data)
       .then((res) => {
         const { data } = res;
+
         if (data) {
           setIsLogged(true);
           setUser([...user, data]);
@@ -43,7 +44,7 @@ export const Login = () => {
           localStorage.setItem("@USERID", JSON.stringify(data.user.id));
 
           setTimeout(() => {
-            navigate(`/dashboard/${data.user.name}`, { replace: true });
+            navigate("/dashboard", { replace: true });
           }, 1500);
         }
       })

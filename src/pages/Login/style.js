@@ -136,6 +136,7 @@ export const Form = styled.form`
   }
   button:hover {
     background-color: var(--color-primary-focus);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
     transition: 0.4s;
   }
 

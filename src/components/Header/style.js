@@ -59,7 +59,7 @@ export const StyledHeader = styled.header`
   span {
     font-family: var(--font-family);
     color: var(--grey1);
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     font-weight: 400;
   }
   @media (min-width: 1281px) {

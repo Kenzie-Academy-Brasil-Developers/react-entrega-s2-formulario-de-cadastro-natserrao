@@ -1,15 +1,17 @@
 import { Container, Nav, Section, Form } from "./style";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import api from "../../services/api";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import { formSchema } from "../../validators/registerUser";
-import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { motion } from "framer-motion";
-import { toast } from "react-toastify";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/UserContext";
+import { useForm } from "react-hook-form";
 
 export const Register = () => {
+  const { onSubmitRegister } = useContext(UserContext);
+
   const {
     register,
     handleSubmit,
@@ -17,27 +19,6 @@ export const Register = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-
-  const navigate = useNavigate();
-
-  function onSubmit(data) {
-    api
-      .post("/users", data)
-      .then((res) => {
-        console.log(res);
-        if (res.data) {
-          toast.success("Conta criada com sucesso!");
-          setTimeout(() => {
-            navigate("/login", { replace: true });
-          }, 3500);
-        }
-      })
-      .catch((err) => {
-        if (err.response.data.status === "error") {
-          toast.error("Ops! Algo deu errado");
-        }
-      });
-  }
 
   return (
     <motion.div
@@ -60,7 +41,7 @@ export const Register = () => {
             <p>Rapido e grátis, vamos nessa!</p>
           </div>
 
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmitRegister)}>
             <input
               type="text"
               placeholder="Digite aqui seu nome"

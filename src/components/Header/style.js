@@ -18,6 +18,7 @@ export const Nav = styled.nav`
     color: var(--color-primary);
     font-size: 1.5rem;
     font-weight: 700;
+    margin-left: 1rem;
   }
 
   button {
@@ -28,6 +29,7 @@ export const Nav = styled.nav`
     border: none;
     border-radius: 4px;
     color: #ffff;
+    margin-right: 1rem;
 
     font-family: var(--font-family);
     font-weight: 600;
@@ -54,6 +56,7 @@ export const StyledHeader = styled.header`
     color: var(--grey0);
     font-size: 1.3rem;
     font-weight: 700;
+    padding: 0 1rem;
   }
 
   span {
@@ -61,6 +64,7 @@ export const StyledHeader = styled.header`
     color: var(--grey1);
     font-size: 0.8rem;
     font-weight: 400;
+    padding: 0 1rem;
   }
   @media (min-width: 1281px) {
     flex-direction: row;

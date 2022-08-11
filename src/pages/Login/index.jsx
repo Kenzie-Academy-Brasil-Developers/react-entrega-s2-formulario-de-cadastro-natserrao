@@ -1,19 +1,17 @@
+import { useContext } from "react";
 import { AiFillEye } from "react-icons/ai";
 import { Section, Container, Form } from "./style";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { formSchema } from "../../validators/loginUser";
-import { useState } from "react";
-import api from "../../services/api";
-import { toast } from "react-toastify";
+import { UserContext } from "../../contexts/UserContext";
 
 export const Login = () => {
-  const [isLogged, setIsLogged] = useState(false);
-  const [user, setUser] = useState([]);
-  const [passwordShow, setPasswordShow] = useState(false);
+  const { onSubmitLogin, passwordShow, togglePassword } =
+    useContext(UserContext);
 
   const {
     register,
@@ -22,40 +20,6 @@ export const Login = () => {
   } = useForm({
     resolver: yupResolver(formSchema),
   });
-
-  function togglePassword() {
-    setPasswordShow(!passwordShow);
-  }
-
-  const navigate = useNavigate();
-  function onSubmit(data) {
-    api
-      .post("/sessions", data)
-      .then((res) => {
-        const { data } = res;
-
-        if (data) {
-          setIsLogged(true);
-          setUser([...user, data]);
-
-          toast.success("Login feito com sucesso!");
-
-          localStorage.setItem("@TOKEN", JSON.stringify(data.token));
-          localStorage.setItem("@USERID", JSON.stringify(data.user.id));
-
-          setTimeout(() => {
-            navigate("/dashboard", { replace: true });
-          }, 1500);
-        }
-      })
-      .catch((err) => {
-        const { response } = err;
-        console.log(response);
-        if (response.data.status === "error") {
-          toast.error("Ops! Algo deu errado");
-        }
-      });
-  }
 
   return (
     <motion.div
@@ -69,7 +33,7 @@ export const Login = () => {
 
         <Container>
           <h4>Login</h4>
-          <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form onSubmit={handleSubmit(onSubmitLogin)}>
             <input type="email" placeholder="Email" {...register("email")} />
             {errors.email ? (
               <span className="error">{errors.email.message}</span>

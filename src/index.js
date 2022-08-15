@@ -4,16 +4,19 @@ import "./index.css";
 import App from "./App";
 import { GlobalStyle } from "./styles/global";
 import { BrowserRouter } from "react-router-dom";
-import { Providers } from "./contexts/UserContext";
+import { UserProviders } from "./contexts/UserContext";
+import { TechProviders } from "./contexts/TechContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Providers>
-        <GlobalStyle />
-        <App />
-      </Providers>
+      <UserProviders>
+        <TechProviders>
+          <GlobalStyle />
+          <App />
+        </TechProviders>
+      </UserProviders>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -5,9 +5,11 @@ import api from "../services/api";
 
 export const UserContext = createContext({});
 
-export const Providers = ({ children }) => {
+export const UserProviders = ({ children }) => {
   const [isLogged, setIsLogged] = useState(false);
   const [user, setUser] = useState(null);
+  const [techs, setTechs] = useState([]);
+
   const [passwordShow, setPasswordShow] = useState(false);
   const navigate = useNavigate();
 
@@ -24,6 +26,7 @@ export const Providers = ({ children }) => {
         if (data) {
           setIsLogged(true);
           setUser(data.user);
+          setTechs(data.user.techs);
 
           toast.success("Login feito com sucesso!");
 
@@ -56,9 +59,9 @@ export const Providers = ({ children }) => {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((res) => {
-            console.log(res.data);
             const { data } = res;
             setUser(data);
+            setTechs(data.techs);
             navigate("/dashboard", { replace: true });
           })
           .catch((err) => {
@@ -96,6 +99,9 @@ export const Providers = ({ children }) => {
         togglePassword,
         onSubmitRegister,
         user,
+        setUser,
+        setTechs,
+        techs,
       }}
     >
       {children}

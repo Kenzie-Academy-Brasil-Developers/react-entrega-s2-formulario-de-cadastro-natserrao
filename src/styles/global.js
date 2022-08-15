@@ -47,6 +47,7 @@ footer, header, hgroup, menu, nav, section {
 body {
 	line-height: 1;
 	background-color: var(--grey4); 
+
 	
 }
 ol, ul {
@@ -70,4 +71,21 @@ img{
 button{
 	cursor: pointer
 }
+
+#root{
+	display: flex;
+	flex-direction: column;
+}
+
+	::-webkit-scrollbar {
+      width: 3px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--grey0);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 20px;
+      border: 3px solid var(--color-primary);
+    }
 `;

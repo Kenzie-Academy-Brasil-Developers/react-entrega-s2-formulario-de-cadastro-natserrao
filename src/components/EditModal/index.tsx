@@ -1,21 +1,28 @@
 import { IoIosCloseCircle } from "react-icons/io";
 import { Section } from "./style";
+import { useContext } from "react";
+import { ICurrentTech, TechContext } from "../../contexts/TechContext";
+
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { formSchema } from "../../validators/addTech";
-import { useContext } from "react";
-import { TechContext } from "../../contexts/TechContext";
+import { formSchema } from "../../validators/updateTech";
 import { motion } from "framer-motion";
 
-export const AddModal = () => {
-  const { addTech, setIsOpen } = useContext(TechContext);
+export const EditModal = () => {
+  const { currentTech, setCurrentTech, updateTech, removeTech } =
+    useContext(TechContext);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<ICurrentTech>({
     resolver: yupResolver(formSchema),
   });
+
+  function handleSubmitEdit(data: ICurrentTech) {
+    updateTech(data);
+  }
 
   return (
     <motion.div
@@ -27,21 +34,14 @@ export const AddModal = () => {
       <Section>
         <div className="content">
           <div className="infoModal">
-            <h3>Cadastrar Tecnologia</h3>
-            <button onClick={() => setIsOpen(false)}>
+            <h3>Tecnologia Detalhes</h3>
+            <button onClick={() => setCurrentTech(null!)}>
               <IoIosCloseCircle size={20} className="iconClose" />
             </button>
           </div>
 
-          <form onSubmit={handleSubmit(addTech)}>
-            <input
-              type="text"
-              placeholder="Digite aqui a tecnologia"
-              {...register("title")}
-            />
-            {errors.title ? (
-              <span className="error">{errors.title.message}</span>
-            ) : null}
+          <form onSubmit={handleSubmit(handleSubmitEdit)}>
+            <input type="text" disabled value={currentTech.title} />
 
             <select {...register("status")}>
               <option value="Iniciante">Iniciante</option>
@@ -52,7 +52,14 @@ export const AddModal = () => {
               <span className="error">{errors.status.message}</span>
             ) : null}
 
-            <button>Cadastrar Tecnologia</button>
+            <div className="btnContainer">
+              <button id="btnSalvar" type="submit">
+                Salvar Alterações
+              </button>
+              <button onClick={() => removeTech(currentTech.id)}>
+                Excluir
+              </button>
+            </div>
           </form>
         </div>
       </Section>

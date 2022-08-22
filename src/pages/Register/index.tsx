@@ -6,7 +6,7 @@ import { formSchema } from "../../validators/registerUser";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
+import { IUserRegister, UserContext } from "../../contexts/UserContext";
 import { useForm } from "react-hook-form";
 
 export const Register = () => {
@@ -16,7 +16,7 @@ export const Register = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IUserRegister>({
     resolver: yupResolver(formSchema),
   });
 
@@ -96,7 +96,7 @@ export const Register = () => {
               <span className="error">{errors.contact.message}</span>
             ) : null}
 
-            <select name="module" id="module" {...register("course_module")}>
+            <select id="module" {...register("course_module")}>
               <option value="Primeiro Módulo (Introdução ao Frontend)">
                 Primeiro Módulo
               </option>

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { formSchema } from "../../validators/loginUser";
-import { UserContext } from "../../contexts/UserContext";
+import { IUserLogin, UserContext } from "../../contexts/UserContext";
 
 export const Login = () => {
   const { onSubmitLogin, passwordShow, togglePassword } =
@@ -17,7 +17,7 @@ export const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<IUserLogin>({
     resolver: yupResolver(formSchema),
   });
 

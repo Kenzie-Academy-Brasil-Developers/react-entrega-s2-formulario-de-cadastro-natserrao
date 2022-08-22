@@ -48,7 +48,7 @@ export const Dashboard = () => {
         </ul>
       </Section>
 
-      {isOpen && <AddModal setIsOpen={setIsOpen} />}
+      {isOpen && <AddModal />}
       {currentTech && <EditModal />}
     </motion.div>
   ) : (
